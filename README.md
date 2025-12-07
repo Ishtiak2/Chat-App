@@ -187,4 +187,143 @@ To change the port, edit:
 2. `client/ClientGUI.java` - Line: `portField = new JTextField("5555");`
 
 Then recompile both server and client.
+
+---
+
+## Running on Windows
+
+The Java code works identically on Windows! Here's what you need:
+
+### Prerequisites
+
+**Install Java JDK:**
+- Download from: https://www.oracle.com/java/technologies/downloads/
+- Or use OpenJDK: https://adoptium.net/
+- Verify installation:
+  ```cmd
+  java -version
+  javac -version
+  ```
+
+### Windows Commands
+
+**Step 1: Compile (Command Prompt or PowerShell)**
+```cmd
+cd server
+javac Server.java ClientHandler.java
+
+cd ..\client
+javac Client.java ClientGUI.java
+```
+
+**Step 2: Start Server (in one cmd window)**
+```cmd
+cd server
+java Server
+```
+
+**Step 3: Start Clients (open new cmd windows)**
+```cmd
+cd client
+java ClientGUI
+```
+
+### Optional: Create Batch Files
+
+**Create `start_server.bat`:**
+```batch
+@echo off
+cd server
+javac Server.java ClientHandler.java
+echo Server compiled!
+java Server
+pause
+```
+
+**Create `start_client.bat`:**
+```batch
+@echo off
+cd client
+javac Client.java ClientGUI.java
+echo Client compiled!
+java ClientGUI
+pause
+```
+
+Double-click the `.bat` files to run!
+
+### Finding Your IP on Windows
+
+```cmd
+ipconfig
+```
+Look for "IPv4 Address" under your active network adapter.
+
+### Windows Firewall
+
+When you first run the server:
+- Windows Defender will show a popup
+- Check "Private networks"
+- Click "Allow access"
+
+---
+
+## Chatting Across Devices
+
+To chat with someone on another device (same network):
+
+### On Server Machine:
+
+**1. Find your IP address:**
+
+macOS/Linux:
+```bash
+ifconfig | grep "inet " | grep -v 127.0.0.1
+```
+Or:
+```bash
+ipconfig getifaddr en0
+```
+
+Windows:
+```cmd
+ipconfig
+```
+
+You'll get something like: `192.168.1.5`
+
+**2. Start the server:**
+```bash
+cd server
+java Server
+```
+
+**3. Configure firewall** to allow port 5555
+
+### On Client Machine:
+
+**1. Copy the `client` folder** to the other device
+
+**2. Compile and run:**
+```bash
+cd client
+javac Client.java ClientGUI.java
+java ClientGUI
+```
+
+**3. Connect using:**
+- **Username**: Your name
+- **Server IP**: `192.168.1.5` (the server's IP from step 1)
+- **Port**: `5555`
+- Click **Connect**
+
+**Important:** Both devices must be on the same WiFi/network!
+
+---
+
+## Additional Resources
+
+- **HOW_IT_WORKS.md**: Detailed explanation of networking concepts (no code, just concepts)
+- **Server logs**: Watch the server terminal for debug information
+- **Client logs**: Check client terminal for connection and message status
 # Chat-App
