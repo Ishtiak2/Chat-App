@@ -11,12 +11,12 @@ public class Client {
         this.gui = gui;
         try {
             socket = new Socket(serverAddress, port);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new PrintWriter(socket.getOutputStream(), true);
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream())); // read message from server
+            output = new PrintWriter(socket.getOutputStream(), true); // send message to server
             
-            output.println(username);
+            output.println(username); //sends the user name
             
-            new Thread(new MessageListener()).start();
+            new Thread(new MessageListener()).start(); //start listening for messages from server
             
         } catch (IOException e) {
             gui.displayMessage("Error connecting to server: " + e.getMessage());
@@ -42,6 +42,7 @@ public class Client {
         }
     }
     
+    //This is a background thread that constantly listens for messages from server.
     private class MessageListener implements Runnable {
         @Override
         public void run() {

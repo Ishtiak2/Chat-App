@@ -1,10 +1,10 @@
 import java.io.*;
 import java.net.*;
-
-public class ClientHandler implements Runnable {
+//ClientHandler handles one single client in the chat server.
+public class ClientHandler implements Runnable { //it can run inside a thread.
     private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;
+    private BufferedReader input; //to read data from the client
+    private PrintWriter output; //to send data to the client
     private String username;
     
     public ClientHandler(Socket socket) {
@@ -25,7 +25,7 @@ public class ClientHandler implements Runnable {
             Server.broadcastMessage(username + " has joined the chat!", this);
             
             String message;
-            while ((message = input.readLine()) != null) {
+            while ((message = input.readLine()) != null) {   //waits until: The client sends a line of text Or the client disconnects
                 System.out.println("[SERVER] Received from " + username + ": " + message);
                 Server.broadcastMessage(username + ": " + message, this);
             }
